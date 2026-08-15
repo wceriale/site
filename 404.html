@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Not found — Your Name</title>
+    <meta name="robots" content="noindex" />
+
+    <!-- Root-absolute paths: this page can be served from any depth. -->
+    <link rel="icon" href="/site/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/site/assets/css/style.css" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t) document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="home" href="/site/">Your Name</a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/site/">Home</a>
+          <a href="/site/blog/">Writing</a>
+          <a href="/site/#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main id="main">
+        <section class="section intro">
+          <h1>Not found</h1>
+          <p class="lead">
+            There's nothing at this address — it may have moved, or it may
+            never have existed.
+          </p>
+          <p>
+            <a href="/site/">Back to the homepage</a> or
+            <a href="/site/blog/">browse the writing</a>.
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>&copy; 2026 Your Name</span>
+        <span><a href="https://github.com/wceriale/site">Source</a></span>
+      </footer>
+    </div>
+  </body>
+</html>

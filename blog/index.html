@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Writing — Your Name</title>
+    <meta name="description" content="Essays and notes by Your Name." />
+
+    <link rel="canonical" href="https://wceriale.github.io/site/blog/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Writing — Your Name" />
+    <meta property="og:description" content="Essays and notes by Your Name." />
+
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t) document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="wrap">
+      <header class="site-header">
+        <a class="home" href="../">Your Name</a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="../">Home</a>
+          <a href="./" aria-current="page">Writing</a>
+          <a href="../#contact">Contact</a>
+          <button class="theme-toggle" type="button">
+            <span class="icon-light" aria-hidden="true">Dark</span>
+            <span class="icon-dark" aria-hidden="true">Light</span>
+          </button>
+        </nav>
+      </header>
+
+      <main id="main">
+        <section class="section">
+          <h1>Writing</h1>
+          <p class="lead">
+            Notes, mostly on things I'm building. Newest first.
+          </p>
+        </section>
+
+        <section class="section">
+          <!-- Add new posts at the top of this list. -->
+          <ul class="items">
+            <li>
+              <h2 class="item-title">
+                <a href="notes-on-static-sites.html"
+                  >Notes on keeping a site static</a
+                >
+              </h2>
+              <p class="item-meta">
+                <time datetime="2026-08-15">August 15, 2026</time>
+              </p>
+              <p class="item-desc">
+                Why a handful of HTML files still beats a framework for a
+                personal site, and what you give up.
+              </p>
+            </li>
+            <li>
+              <h2 class="item-title">
+                <a href="hello-world.html">Hello, world</a>
+              </h2>
+              <p class="item-meta">
+                <time datetime="2026-08-15">August 15, 2026</time>
+              </p>
+              <p class="item-desc">
+                A first post, and a short note on what this site is for.
+              </p>
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>&copy; 2026 Your Name</span>
+        <span><a href="https://github.com/wceriale/site">Source</a></span>
+      </footer>
+    </div>
+
+    <script src="../assets/js/theme.js"></script>
+  </body>
+</html>
