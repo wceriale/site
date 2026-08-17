@@ -1,0 +1,40 @@
+# Site settings ------------------------------------------------------
+# TODO: replace with your name and a one-line description.
+title: Your Name
+author: Your Name
+email: ""
+description: >-
+  Personal site of Your Name — writing and notes.
+
+# baseurl MUST match the repository name for a project page, or every
+# link on the deployed site 404s while working fine locally.
+baseurl: "/site"
+url: "https://wceriale.github.io"
+
+github_username: wceriale
+
+# Build --------------------------------------------------------------
+theme: minima
+markdown: kramdown
+
+minima:
+  date_format: "%b %-d, %Y"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Pages listed in the site header. Leaving this out means minima lists
+# every page that has a `title:` in its front matter. Uncomment and list
+# filenames to control the nav explicitly — note that an EMPTY list here
+# does not mean "no nav": Liquid's `default` filter treats it as unset and
+# falls back to listing everything.
+# header_pages:
+#   - about.md
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - .bundle

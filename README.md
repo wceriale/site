@@ -1,91 +1,126 @@
 # site
 
-My personal website. Static HTML and one stylesheet — no build step, no
-dependencies, no framework.
+My personal website — a [Jekyll](https://jekyllrb.com/) site using the
+[minima](https://github.com/jekyll/minima) theme, published with GitHub
+Pages.
 
 **Live at:** https://wceriale.github.io/site/
 
 ## Layout
 
 ```
-index.html              Landing page
-404.html                Custom not-found page
-blog/
-  index.html            Post list — add new posts here too
-  hello-world.html      Post
-  notes-on-static-sites.html
-  _template.html        Copy this to start a new post (unlinked)
-assets/
-  css/style.css         All styling, including light/dark themes
-  js/theme.js           Theme toggle
-  favicon.svg
-.github/workflows/deploy.yml   Publishes to GitHub Pages on push to main
+_config.yml             Site settings — title, description, baseurl
+Gemfile                 Ruby dependencies
+index.md                Home page: intro text, then the post list
+404.md                  Custom not-found page
+_posts/                 One Markdown file per post
+_includes/
+  custom-head.html      Injected into <head> on every page (favicon, etc.)
+assets/favicon.svg
+.github/workflows/deploy.yml   Builds and publishes on push to main
 ```
+
+Everything else — layouts, stylesheet, header, footer — comes from the
+minima gem. Nothing to maintain until you want to change it.
+
+## Writing a post
+
+Create `_posts/YYYY-MM-DD-some-slug.md`:
+
+```markdown
+---
+layout: post
+title: "The title"
+date: 2026-08-20
+---
+
+Write in Markdown.
+```
+
+That's the whole process. The home page picks it up automatically and
+sorts by date — there's no index to update. The filename date sets the
+URL, which comes out as `/site/2026/08/20/some-slug.html`.
+
+Drafts go in `_drafts/` without a date in the filename; they're excluded
+from builds unless you pass `--drafts`.
 
 ## Publishing
 
-Push to `main`. The Actions workflow uploads the repo as-is and deploys it;
-a run takes well under a minute. Watch it in the **Actions** tab.
-
-## Adding a post
-
-1. Copy `blog/_template.html` to `blog/your-slug.html`.
-2. Replace `POST_TITLE`, `POST_DESCRIPTION`, `POST_SLUG`, and both dates
-   (the `datetime="…"` attribute and the human-readable text).
-3. Write the post inside `<div class="post-body">`.
-4. Add a `<li>` at the **top** of the list in `blog/index.html`. Optionally
-   add one to the Writing section of `index.html` too.
-
-Step 4 is manual and easy to forget — a post nobody links to is a post
-nobody reads.
+Push to `main`. The Actions workflow installs gems, runs `jekyll build`,
+and deploys the result. Watch it in the **Actions** tab.
 
 ## Previewing locally
 
-Open `index.html` directly in a browser, or serve it so that root-absolute
-paths in `404.html` resolve the same way they do in production:
+Needs Ruby (3.1+). First time:
 
 ```sh
-python3 -m http.server 8000
-# then visit http://localhost:8000/
+bundle install
 ```
+
+Then:
+
+```sh
+bundle exec jekyll serve
+```
+
+and open <http://localhost:4000/site/>. It rebuilds as you edit. Note the
+`/site/` — that's the `baseurl`, and the local server honors it.
 
 ## Making it yours
 
-Everything you need to change is marked `TODO` in the HTML:
+Placeholders are marked `TODO`:
 
 ```sh
-grep -rn "TODO" --include="*.html" .
+grep -rn "TODO" _config.yml index.md
 ```
 
-That covers your name, the tagline and bio, the projects list, and the
-contact links. The contact section ships with a placeholder
-`you@example.com` — replace it with a real address only if you want that
-address public.
+That covers the site title, author, and description in `_config.yml`, plus
+the intro copy in `index.md`.
+
+## Things worth knowing
+
+**`baseurl` must stay `/site`** — it has to match the repository name, or
+every link breaks once deployed while still working locally. If you ever
+add a custom domain, `baseurl` becomes `""`.
+
+Write internal links as `{% raw %}{{ "/some/path" | relative_url }}{% endraw %}`
+rather than hardcoding `/site/...`, so they survive a `baseurl` change.
+
+**An empty `header_pages: []` does not mean "no nav."** Liquid's `default`
+filter treats an empty list as unset, so minima falls back to listing every
+page that has a `title:`. That's why `404.md` has no title. To add a nav
+item, create e.g. `about.md` with a `title:` in its front matter.
+
+## Adding pages
+
+Create a Markdown file at the repo root:
+
+```markdown
+---
+layout: page
+title: About
+permalink: /about/
+---
+```
+
+It appears in the nav automatically, because it has a title.
 
 ## Customizing the look
 
-The palette lives at the top of `assets/css/style.css` as custom
-properties. Light values are on `:root`; the dark overrides appear twice —
-once under `prefers-color-scheme` for people who never touch the toggle,
-once under `[data-theme="dark"]` for people who do. Change a color in all
-the places it's defined and the whole site follows.
+The theme is a gem, so its files aren't in this repo. To override one,
+create a file at the same path locally and it wins — e.g. to restyle,
+create `assets/main.scss`:
 
-`--content-width` controls the column: 800px including its 30px gutters,
-so about 740px of text. `--font-base` and `--font-mono` control the type.
-All font stacks are system fonts, so nothing is fetched from a third
-party.
+```scss
+---
+---
+@import "minima";
 
-The design follows Jekyll's `minima` theme — same 800px measure, 16px/1.5
-body text, `#2a7ae2` links, and the 5px rule above the header.
+// your overrides here
+```
 
-## Using a custom domain
+Run `bundle info minima` to find the gem's directory and copy the file you
+want to change.
 
-1. Add a `CNAME` file at the repo root containing the bare domain, e.g.
-   `example.com`.
-2. Point DNS at GitHub Pages (an `ALIAS`/`ANAME` for an apex domain, or a
-   `CNAME` to `wceriale.github.io` for a subdomain).
-3. Set the domain under **Settings → Pages**, then enable **Enforce HTTPS**
-   once the certificate is issued.
-
-With a custom domain the site sits at the root, so the `/site/`-prefixed
-paths in `404.html` and the `canonical` tags need updating to plain `/`.
+Note that minima 2.5 is light-only; the dark-mode toggle from the earlier
+hand-written version of this site is gone.

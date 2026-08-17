@@ -17,24 +17,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # bundler-cache installs the Gemfile and caches gems between runs.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      # base_path comes from the Pages config, so the baseurl is right
+      # whether the site is served from /site/ or from a custom domain.
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-
-      # enablement: true turns Pages on for the repo the first time this
-      # runs, so there's no setting to flip by hand.
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      # The site is plain HTML — the whole repo root is the artifact.
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
       - id: deployment
         uses: actions/deploy-pages@v4
