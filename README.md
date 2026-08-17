@@ -70,9 +70,13 @@ once under `prefers-color-scheme` for people who never touch the toggle,
 once under `[data-theme="dark"]` for people who do. Change a color in all
 the places it's defined and the whole site follows.
 
-`--measure` controls the text column width and `--font-serif` /
-`--font-sans` control the type. All font stacks are system fonts, so
-nothing is fetched from a third party.
+`--content-width` controls the column: 800px including its 30px gutters,
+so about 740px of text. `--font-base` and `--font-mono` control the type.
+All font stacks are system fonts, so nothing is fetched from a third
+party.
+
+The design follows Jekyll's `minima` theme — same 800px measure, 16px/1.5
+body text, `#2a7ae2` links, and the 5px rule above the header.
 
 ## Using a custom domain
 

@@ -1,64 +1,58 @@
 /* ------------------------------------------------------------------
-   Personal site — minimal typographic stylesheet.
-   Single file, no dependencies, no build step.
-   Palette is defined once as custom properties; dark mode only
-   swaps the values.
+   Personal site — plain, old-school stylesheet.
+   Modeled on Jekyll's "minima" theme: 800px column, system sans,
+   16px/1.5, blue links, hairline rules. No build step.
    ------------------------------------------------------------------ */
 
 :root {
-  /* Type */
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino,
-    "Book Antiqua", Georgia, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  /* Type — minima's stacks verbatim */
+  --font-base: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-mono: "Menlo", "Inconsolata", "Consolas", "Roboto Mono", "Ubuntu Mono",
+    "Liberation Mono", "Courier New", monospace;
 
-  /* Measure and rhythm */
-  --measure: 38rem;
-  --gutter: 1.5rem;
-  --step: 1.6rem;
+  /* Layout — 800px wrapper including its 30px gutters, so ~740px of text */
+  --content-width: 800px;
+  --spacing: 30px;
 
-  /* Light palette (default) */
-  --bg: #fdfdfb;
-  --bg-subtle: #f4f3ef;
-  --text: #17171a;
-  --text-muted: #6b6b73;
-  --text-faint: #93939c;
-  --rule: #e2e1db;
-  --accent: #9c4a1f;
-  --accent-hover: #7d3a17;
-  --selection: #f3ddd0;
+  /* Light palette */
+  --bg: #fdfdfd;
+  --text: #111111;
+  --grey: #828282;
+  --grey-light: #e8e8e8;
+  --grey-dark: #424242;
+  --link: #2a7ae2;
+  --link-visited: #1756a9;
+  --code-bg: #eeeeff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #111113;
-    --bg-subtle: #1a1a1d;
-    --text: #e9e8e4;
-    --text-muted: #9c9ba3;
-    --text-faint: #6e6d75;
-    --rule: #2b2b30;
-    --accent: #e08b5c;
-    --accent-hover: #f0a479;
-    --selection: #3a2a20;
+    --bg: #181818;
+    --text: #bbbbbb;
+    --grey: #828282;
+    --grey-light: #424242;
+    --grey-dark: #bbbbbb;
+    --link: #79b8ff;
+    --link-visited: #9d7cd8;
+    --code-bg: #2f2f2f;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #111113;
-  --bg-subtle: #1a1a1d;
-  --text: #e9e8e4;
-  --text-muted: #9c9ba3;
-  --text-faint: #6e6d75;
-  --rule: #2b2b30;
-  --accent: #e08b5c;
-  --accent-hover: #f0a479;
-  --selection: #3a2a20;
+  --bg: #181818;
+  --text: #bbbbbb;
+  --grey: #828282;
+  --grey-light: #424242;
+  --grey-dark: #bbbbbb;
+  --link: #79b8ff;
+  --link-visited: #9d7cd8;
+  --code-bg: #2f2f2f;
 }
 
 /* ------------------------------------------------------------------
-   Reset-ish
+   Base
    ------------------------------------------------------------------ */
 
 *,
@@ -69,19 +63,6 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
 body {
@@ -89,22 +70,17 @@ body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  font-kerning: normal;
-  text-rendering: optimizeLegibility;
+  font-family: var(--font-base);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--selection);
 }
 
 img {
   max-width: 100%;
   height: auto;
-  display: block;
+  vertical-align: middle;
 }
 
 /* ------------------------------------------------------------------
@@ -112,9 +88,9 @@ img {
    ------------------------------------------------------------------ */
 
 .wrap {
-  max-width: var(--measure);
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0 var(--spacing);
 }
 
 .skip-link {
@@ -123,85 +99,87 @@ img {
   top: 0;
   background: var(--bg);
   color: var(--text);
-  padding: 0.75rem 1rem;
+  padding: 10px 15px;
   z-index: 10;
-  border: 1px solid var(--rule);
+  border: 1px solid var(--grey-light);
 }
 
 .skip-link:focus {
-  left: 0.5rem;
-  top: 0.5rem;
+  left: 8px;
+  top: 8px;
 }
 
 /* ------------------------------------------------------------------
-   Header
+   Header — heavy top rule, title left, nav right (minima's signature)
    ------------------------------------------------------------------ */
 
 .site-header {
+  border-top: 5px solid var(--grey-dark);
+  border-bottom: 1px solid var(--grey-light);
+  min-height: 55.95px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
   flex-wrap: wrap;
-  padding: 2.5rem 0 0;
+  gap: 10px;
+  padding: 8px 0;
 }
 
 .site-header .home {
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -1px;
   color: var(--text);
   text-decoration: none;
-  border: 0;
+}
+
+.site-header .home:visited {
+  color: var(--text);
 }
 
 .site-header .home:hover {
-  color: var(--accent);
+  text-decoration: none;
 }
 
 .site-nav {
   display: flex;
-  align-items: baseline;
-  gap: 1.25rem;
-  font-size: 0.9375rem;
+  align-items: center;
+  gap: 20px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .site-nav a {
-  color: var(--text-muted);
+  color: var(--text);
   text-decoration: none;
-  border: 0;
 }
 
-.site-nav a:hover,
-.site-nav a[aria-current="page"] {
+.site-nav a:visited {
   color: var(--text);
+}
+
+.site-nav a:hover {
+  text-decoration: underline;
 }
 
 .site-nav a[aria-current="page"] {
   text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--rule);
 }
 
-/* Theme toggle */
 .theme-toggle {
   background: none;
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  color: var(--text-muted);
+  border: 1px solid var(--grey-light);
+  color: var(--grey);
   cursor: pointer;
-  font: inherit;
-  font-size: 0.8125rem;
+  font-family: inherit;
+  font-size: 13px;
   line-height: 1;
-  padding: 0.4rem 0.7rem;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  padding: 5px 8px;
 }
 
 .theme-toggle:hover {
   color: var(--text);
-  border-color: var(--text-faint);
 }
 
 .theme-toggle .icon-dark {
@@ -233,208 +211,213 @@ img {
 h1,
 h2,
 h3,
-h4 {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+h4,
+h5,
+h6 {
+  font-weight: 500;
   color: var(--text);
-  margin: 0 0 0.6em;
-  text-wrap: balance;
+  margin: 0 0 15px;
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 32px;
+  letter-spacing: -1px;
 }
 
 h2 {
-  font-size: 1.375rem;
-  margin-top: 0;
+  font-size: 26px;
+  letter-spacing: -1px;
 }
 
 h3 {
-  font-size: 1.125rem;
+  font-size: 20px;
 }
 
-p {
-  margin: 0 0 1.15em;
-  text-wrap: pretty;
+h4 {
+  font-size: 18px;
+}
+
+p,
+ul,
+ol,
+dl,
+figure,
+blockquote,
+pre,
+table {
+  margin: 0 0 15px;
 }
 
 a {
-  color: var(--accent);
+  color: var(--link);
   text-decoration: none;
-  border-bottom: 1px solid var(--rule);
-  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a:visited {
+  color: var(--link-visited);
 }
 
 a:hover {
-  color: var(--accent-hover);
-  border-bottom-color: currentColor;
+  color: var(--text);
+  text-decoration: underline;
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-strong {
-  font-weight: 600;
-}
-
-code {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--bg-subtle);
-  padding: 0.15em 0.35em;
-  border-radius: 3px;
-}
-
-pre {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  background: var(--bg-subtle);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 1rem;
-  overflow-x: auto;
-}
-
-pre code {
-  background: none;
-  padding: 0;
-  font-size: inherit;
-}
-
-blockquote {
-  margin: 1.6rem 0;
-  padding-left: 1.25rem;
-  border-left: 2px solid var(--rule);
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid var(--rule);
-  margin: var(--step) 0;
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
 }
 
 ul,
 ol {
-  padding-left: 1.25rem;
-  margin: 0 0 1.15em;
+  padding-left: var(--spacing);
+  margin-left: 0;
 }
 
-li {
-  margin-bottom: 0.35em;
+li > ul,
+li > ol {
+  margin-bottom: 0;
+}
+
+blockquote {
+  color: var(--grey);
+  border-left: 4px solid var(--grey-light);
+  padding-left: 15px;
+  font-size: 18px;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+pre,
+code {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  border: 1px solid var(--grey-light);
+  border-radius: 3px;
+  background-color: var(--code-bg);
+}
+
+code {
+  padding: 1px 5px;
+}
+
+pre {
+  padding: 8px 12px;
+  overflow-x: auto;
+}
+
+pre > code {
+  border: 0;
+  padding-right: 0;
+  padding-left: 0;
+  background: none;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--grey-light);
+  margin: var(--spacing) 0;
 }
 
 /* ------------------------------------------------------------------
-   Sections
+   Page content
    ------------------------------------------------------------------ */
 
 main {
-  padding: 3.5rem 0 1rem;
+  display: block;
+  padding: var(--spacing) 0;
 }
 
 .section {
-  margin-bottom: 3.25rem;
+  margin-bottom: var(--spacing);
 }
 
+/* Formerly an uppercase micro-label; now just a plain heading. */
 .section-label {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--rule);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  color: var(--text);
+  margin-bottom: 15px;
+  text-transform: none;
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
-/* Intro */
 .intro h1 {
-  margin-bottom: 0.35rem;
+  font-size: 36px;
+  margin-bottom: 5px;
 }
 
 .intro .tagline {
-  color: var(--text-muted);
-  font-size: 1.0625rem;
-  margin-bottom: 1.6rem;
+  color: var(--grey);
+  font-size: 16px;
+  margin-bottom: 15px;
 }
 
 .lead {
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-size: 16px;
 }
 
 /* ------------------------------------------------------------------
-   Item lists (projects, posts)
+   Lists of posts / projects
    ------------------------------------------------------------------ */
 
 .items {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-left: 0;
 }
 
 .items > li {
-  margin: 0;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.items > li:first-child {
-  padding-top: 0;
+  margin-bottom: var(--spacing);
+  padding: 0;
+  border-bottom: 0;
 }
 
 .items > li:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .item-title {
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  font-weight: 600;
-  margin: 0 0 0.2rem;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin: 0 0 2px;
 }
 
 .item-title a {
-  color: var(--text);
-  border-bottom: 0;
+  color: var(--link);
 }
 
-.item-title a:hover {
-  color: var(--accent);
+.item-title a:visited {
+  color: var(--link-visited);
 }
 
 .item-meta {
-  font-size: 0.8125rem;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-  margin: 0 0 0.35rem;
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0 0 5px;
 }
 
 .item-desc {
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.9375rem;
+  font-size: 16px;
 }
 
-/* Inline link row (contact) */
 .link-row {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  gap: 5px 20px;
 }
 
 .link-row li {
@@ -446,34 +429,40 @@ main {
    ------------------------------------------------------------------ */
 
 .post-header {
-  margin-bottom: 2.25rem;
+  margin-bottom: var(--spacing);
 }
 
 .post-header h1 {
-  font-size: 1.875rem;
-  margin-bottom: 0.4rem;
+  font-size: 42px;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 5px;
 }
 
 .post-date {
-  font-size: 0.8125rem;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  color: var(--grey);
+  display: block;
   margin: 0;
 }
 
+.post-body {
+  margin-bottom: var(--spacing);
+}
+
 .post-body h2 {
-  margin-top: 2.25rem;
+  font-size: 26px;
+  margin-top: var(--spacing);
 }
 
 .post-body h3 {
-  margin-top: 1.75rem;
+  font-size: 20px;
+  margin-top: 20px;
 }
 
 .post-nav {
-  margin-top: 3rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.9375rem;
+  margin-top: var(--spacing);
+  font-size: 16px;
 }
 
 /* ------------------------------------------------------------------
@@ -481,49 +470,64 @@ main {
    ------------------------------------------------------------------ */
 
 .site-footer {
-  margin-top: 4rem;
-  padding: 1.5rem 0 3rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.8125rem;
-  color: var(--text-faint);
+  border-top: 1px solid var(--grey-light);
+  padding: var(--spacing) 0;
+  font-size: 15px;
+  color: var(--grey);
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 15px;
   flex-wrap: wrap;
 }
 
 .site-footer a {
-  color: var(--text-muted);
-  border-bottom: 0;
+  color: var(--grey);
+}
+
+.site-footer a:visited {
+  color: var(--grey);
 }
 
 .site-footer a:hover {
-  color: var(--accent);
+  color: var(--text);
 }
 
 /* ------------------------------------------------------------------
-   Small screens
+   Small screens (minima's $on-palm: 600px)
    ------------------------------------------------------------------ */
 
-@media (max-width: 34rem) {
+@media screen and (max-width: 600px) {
   :root {
-    --gutter: 1.25rem;
-  }
-
-  body {
-    font-size: 1rem;
-  }
-
-  h1 {
-    font-size: 1.875rem;
-  }
-
-  main {
-    padding-top: 2.5rem;
+    --spacing: 15px;
   }
 
   .site-header {
-    padding-top: 1.75rem;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  h1,
+  .intro h1 {
+    font-size: 28px;
+  }
+
+  .post-header h1 {
+    font-size: 32px;
+  }
+
+  h2,
+  .section-label,
+  .post-body h2 {
+    font-size: 22px;
+  }
+
+  .item-title {
+    font-size: 20px;
   }
 }
 
@@ -545,7 +549,6 @@ main {
   }
 
   a {
-    border: 0;
     color: #000;
   }
 }
