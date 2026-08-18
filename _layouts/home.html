@@ -13,8 +13,14 @@ layout: default
 
   {{ content }}
 
+  {%- comment -%}
+    The heading sits OUTSIDE the posts check on purpose, so it still shows
+    while there is nothing to list. The <ul> stays inside, so an empty list
+    is never emitted.
+  {%- endcomment -%}
+  <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
+
   {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
     <ul class="post-list">
       {%- for post in site.posts -%}
       <li>
