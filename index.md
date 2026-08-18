@@ -1,17 +1,17 @@
 ---
 layout: home
+list_title: Thoughts
 ---
 
-<!-- TODO: one line — what you do, where you are. -->
-Software engineer. Somewhere on Earth.
+Hi, I'm Will 👋
 
-<!-- TODO: two or three sentences. Who you are, what you're working on,
-     what you care about. Keep it short — this is the part people
-     actually read. -->
-This is the opening paragraph of your site. Say what you build and why. A
-couple of sentences is plenty — people skim landing pages, then click
-through to the things that interest them.
+Currently building [Equilibria](https://equilibrialaw.com/), a data platform for attorneys. Before this I was a senior SWE at Google working on generative AI in Google Ads.
 
-You can add a second paragraph here for context: a current role, a research
-interest, a project you're heads-down on. Or delete it and let the page
-breathe.
+My passions are in education, climate and technology.  
+
+I’m an adjunct lecturer for CUNY Guttman. I've been teaching since 2015, starting as a TA for the University of Washington’s CSE department.
+
+I co-founded [Ruta Verde](https://rutaverde.org/) in 2019, a non profit focused on agroforestry. Our current project is the reforestation of 20 acres in Lake Chelan. 
+
+Lately I've been exploring open source models for local devices. 
+

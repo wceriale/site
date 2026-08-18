@@ -1,10 +1,9 @@
 # Site settings ------------------------------------------------------
-# TODO: replace with your name and a one-line description.
-title: Your Name
-author: Your Name
+title: William Ceriale
+author: William Ceriale
 email: ""
 description: >-
-  Personal site of Your Name — writing and notes.
+  Will's site. Thoughts and ideas (no AI allowed).
 
 # baseurl MUST match the repository name for a project page, or every
 # link on the deployed site 404s while working fine locally.

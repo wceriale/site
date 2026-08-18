@@ -1,0 +1,167 @@
+---
+# This file overrides the minima gem's assets/main.scss (site files win over
+# theme files). The front matter is what makes Jekyll compile it.
+---
+
+@import "minima";
+
+// Theme palettes. Light values mirror minima 2.5's compiled defaults, so
+// light mode looks exactly like stock minima.
+:root {
+  --bg: #fdfdfd;
+  --text: #111;
+  --link: #2a7ae2;
+  --link-visited: #1756a9;
+  --muted: #828282;
+  --strong: #424242;
+  --border: #e8e8e8;
+  --code-bg: #eef;
+  --row-alt: #f3f3f3;
+  // The toggle shows the mode you'd switch TO: moon in light, sun in dark.
+  --show-moon: inline;
+  --show-sun: none;
+}
+
+@mixin dark-palette {
+  --bg: #15171a;
+  --text: #d9dce1;
+  --link: #8ab4f8;
+  --link-visited: #aecbfa;
+  --muted: #9aa0a6;
+  --strong: #cdd1d6;
+  --border: #33373d;
+  --code-bg: #1e2126;
+  --row-alt: #1b1e22;
+  --show-moon: none;
+  --show-sun: inline;
+}
+
+// Dark when the OS prefers it and the toggle hasn't forced light…
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-palette;
+  }
+}
+
+// …or whenever the toggle forced dark.
+:root[data-theme="dark"] {
+  @include dark-palette;
+}
+
+// Re-state minima's colors in terms of the palette. Same selectors and
+// specificity as the theme's rules; these win by coming later in the file.
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: var(--link);
+
+  &:visited {
+    color: var(--link-visited);
+  }
+}
+
+blockquote {
+  color: var(--muted);
+  border-left-color: var(--border);
+}
+
+pre,
+code {
+  background-color: var(--code-bg);
+  border-color: var(--border);
+}
+
+.highlighter-rouge .highlight {
+  background: var(--code-bg);
+}
+
+table {
+  color: var(--text);
+  border-color: var(--border);
+
+  tr:nth-child(even) {
+    background-color: var(--row-alt);
+  }
+
+  th {
+    background-color: var(--row-alt);
+    border-color: var(--border);
+  }
+
+  td {
+    border-color: var(--border);
+  }
+}
+
+.site-header {
+  border-top-color: var(--strong);
+  border-bottom-color: var(--border);
+}
+
+.site-title,
+.site-title:visited {
+  color: var(--strong);
+}
+
+.site-nav {
+  .page-link {
+    color: var(--text);
+  }
+
+  @include media-query($on-palm) {
+    background-color: var(--bg);
+    border-color: var(--border);
+
+    .menu-icon > svg {
+      fill: var(--strong);
+    }
+  }
+}
+
+.site-footer {
+  border-top-color: var(--border);
+}
+
+.footer-col-wrapper {
+  color: var(--muted);
+}
+
+.svg-icon {
+  fill: var(--muted);
+}
+
+.theme-toggle {
+  float: right;
+  margin-left: 15px;
+  // Center the 18px icon within the header's 54px title line.
+  margin-top: 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 0;
+
+  &:hover {
+    color: var(--text);
+  }
+
+  .icon-moon {
+    display: var(--show-moon);
+  }
+
+  .icon-sun {
+    display: var(--show-sun);
+  }
+}
+
+// On palm screens the nav collapses to a hamburger absolutely positioned in
+// the header's right corner; shift the toggle left so they don't overlap.
+.site-nav ~ .theme-toggle {
+  @include media-query($on-palm) {
+    margin-right: 51px;
+  }
+}

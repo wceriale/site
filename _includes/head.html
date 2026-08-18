@@ -1,0 +1,43 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // Runs synchronously before first paint so a saved theme choice never
+    // flashes the opposite colors. No saved choice means no data-theme
+    // attribute, and CSS falls back to prefers-color-scheme.
+    (function () {
+      var theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") {
+        document.documentElement.setAttribute("data-theme", theme);
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        var button = document.querySelector(".theme-toggle");
+        if (!button) return;
+        button.addEventListener("click", function () {
+          var root = document.documentElement;
+          var systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark" : "light";
+          var current = root.getAttribute("data-theme") || systemTheme;
+          var next = current === "dark" ? "light" : "dark";
+          if (next === systemTheme) {
+            // Toggled back to what the OS already wants: drop the override
+            // so the page follows future OS changes again.
+            root.removeAttribute("data-theme");
+            localStorage.removeItem("theme");
+          } else {
+            root.setAttribute("data-theme", next);
+            localStorage.setItem("theme", next);
+          }
+        });
+      });
+    })();
+  </script>
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+  {%- include custom-head.html -%}
+</head>
