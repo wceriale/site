@@ -122,8 +122,12 @@ create `assets/main.scss`:
 Run `bundle info minima` to find the gem's directory and copy the file you
 want to change.
 
-Note that minima 2.5 is light-only; the dark-mode toggle from the earlier
-hand-written version of this site is gone.
+minima 2.5 is light-only on its own. Dark mode here comes from
+`assets/main.scss`, which defines a palette as CSS custom properties and
+re-states minima's colors in terms of them, plus the toggle in
+`_includes/header.html`. Style new components with those variables
+(`var(--text)`, `var(--muted)`, `var(--border)`) and they follow both
+themes for free.
 
 ## Images in posts
 
