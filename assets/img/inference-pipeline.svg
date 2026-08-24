@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 190" role="img"
+     aria-label="A prompt is split into tokens, run through the model, and one next token comes out; the output is appended and the loop repeats.">
+  <!-- PLACEHOLDER FIGURE. Replace with your own diagram.
+       Colors are deliberately mid-tone so the figure stays legible on
+       both the light and dark background without needing two files. -->
+  <style>
+    .box  { fill: none; stroke: #8a9099; stroke-width: 1.5; rx: 6; }
+    .lbl  { font: 500 14px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            fill: #8a9099; text-anchor: middle; }
+    .sub  { font: 12px -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            fill: #8a9099; text-anchor: middle; opacity: .8; }
+    .flow { stroke: #6f9de8; stroke-width: 1.5; fill: none; }
+    .accent { fill: none; stroke: #6f9de8; stroke-width: 1.5; rx: 6; }
+  </style>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6f9de8" />
+    </marker>
+  </defs>
+
+  <rect class="box" x="8"   y="40" width="140" height="54" />
+  <text class="lbl" x="78"  y="66">Prompt</text>
+  <text class="sub" x="78"  y="84">“the cat sat”</text>
+
+  <rect class="box" x="196" y="40" width="140" height="54" />
+  <text class="lbl" x="266" y="66">Tokens</text>
+  <text class="sub" x="266" y="84">the · cat · sat</text>
+
+  <rect class="accent" x="384" y="40" width="140" height="54" />
+  <text class="lbl" x="454" y="66">Model</text>
+  <text class="sub" x="454" y="84">one forward pass</text>
+
+  <rect class="box" x="572" y="40" width="140" height="54" />
+  <text class="lbl" x="642" y="66">Next token</text>
+  <text class="sub" x="642" y="84">“on”</text>
+
+  <line class="flow" x1="152" y1="67" x2="192" y2="67" marker-end="url(#arrow)" />
+  <line class="flow" x1="340" y1="67" x2="380" y2="67" marker-end="url(#arrow)" />
+  <line class="flow" x1="528" y1="67" x2="568" y2="67" marker-end="url(#arrow)" />
+
+  <!-- feedback loop: output is appended to the input and the whole thing runs again -->
+  <path class="flow" d="M642,102 V140 H78 V98" marker-end="url(#arrow)" />
+  <text class="sub" x="360" y="158">…append the new token and run the whole thing again</text>
+</svg>

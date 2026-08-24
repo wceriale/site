@@ -124,3 +124,41 @@ want to change.
 
 Note that minima 2.5 is light-only; the dark-mode toggle from the earlier
 hand-written version of this site is gone.
+
+## Images in posts
+
+Put files in `assets/img/` and reference them through `relative_url` so
+they survive a `baseurl` change:
+
+```markdown
+<figure>
+  <img src="{{ '/assets/img/thing.svg' | relative_url }}"
+       alt="What the figure shows." width="720" height="190" loading="lazy" />
+  <figcaption>Caption.</figcaption>
+</figure>
+```
+
+Plain Markdown (`![alt](...)`) works too, but gives you no caption.
+
+**Formats:** SVG for diagrams and charts — sharp at any zoom, small, and
+the text stays selectable. PNG or JPEG for screenshots and photos. **PDFs
+do not render inline** in a web page; if a diagram starts as a PDF, export
+it to SVG once and commit that.
+
+Set `width` and `height` to the image's real pixel size. The browser uses
+them to reserve space before the file loads, so the page doesn't jump.
+
+**Dark mode:** an SVG loaded via `<img>` can't inherit page colors, so the
+placeholder figures use mid-tone greys and a blue that stay legible on both
+backgrounds. If you need a figure to match each theme exactly, ship two
+files and swap them with `<picture>`:
+
+```html
+<picture>
+  <source srcset="{{ '/assets/img/thing-dark.svg' | relative_url }}"
+          media="(prefers-color-scheme: dark)" />
+  <img src="{{ '/assets/img/thing.svg' | relative_url }}" alt="…" />
+</picture>
+```
+
+Note that this follows the OS setting, not the site's toggle.

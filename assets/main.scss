@@ -165,3 +165,26 @@ table {
     margin-right: 51px;
   }
 }
+
+// Figures ------------------------------------------------------------
+// Images in posts: never overflow the column, and center smaller ones.
+.post-content {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  figure {
+    margin: $spacing-unit 0;
+  }
+
+  figcaption {
+    margin-top: 8px;
+    font-size: $small-font-size;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+}
