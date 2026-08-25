@@ -2,84 +2,53 @@
 layout: post
 title: "ELI5: How inference works"
 date: 2026-08-24
+# Without this, jekyll-seo-tag uses the first paragraph — the disclaimer —
+# as the search-result and link-preview summary.
+description: "How an LLM turns your input into a response, one token at a time."
 ---
 
-<!-- DRAFT: body text is filler. Headings are real so the skeleton is
-     usable — replace the Latin underneath each one. -->
+*This will not cover model training or fine tuning.*
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat.
+## At a high level
 
-## The one-sentence version
+Inference is the process of taking user input, running it through the
+model, and getting back generated content.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+At the end of the day, an LLM spits out the next token given a sequence of
+previous tokens.
 
-<figure>
-  <img src="{{ '/assets/img/inference-pipeline.svg' | relative_url }}"
-       alt="A prompt is split into tokens, run through the model, and one next token comes out; the output is appended and the loop repeats."
-       width="720" height="190" loading="lazy" />
-  <figcaption>
-    Placeholder figure — the loop that produces one token at a time.
-  </figcaption>
-</figure>
+For example:
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+> How are you \_\_\_\_
 
-## Tokens, not words
+This would spit out the following options as a next token: “?”, “today?”,
+“doing?”.
 
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-sed quia consequuntur magni dolores eos qui ratione voluptatem sequi
-nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+Then, it would keep going:
 
-- Ut enim ad minima veniam, quis nostrum exercitationem.
-- Nisi ut aliquid ex ea commodi consequatur.
-- Quis autem vel eum iure reprehenderit qui in ea voluptate.
+> How are you? \_\_\_\_
 
-## Picking the next one
+Would follow up with answering the question, maybe: “I”, “Today”, “Thank”,
+then lead into the following full sentence responses:
 
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-praesentium voluptatum deleniti atque corrupti quos dolores et quas
-molestias excepturi sint occaecati cupiditate non provident.
+- “I am good”
+- “Today I’m doing well”
+- “Thank you for asking, I’m good”
 
-<figure>
-  <img src="{{ '/assets/img/token-probabilities.svg' | relative_url }}"
-       alt="Bar chart of candidate next tokens and their probabilities."
-       width="720" height="220" loading="lazy" />
-  <figcaption>
-    Placeholder figure — every candidate token gets a score.
-  </figcaption>
-</figure>
+This happens by a bunch of 1s and 0s computing to predict the next token.
 
-Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus
-saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
+The following highlights the main steps required for this to happen end to
+end, and gives a high level overview on the intuition behind how each step
+works.
 
-> Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
-> voluptatibus maiores alias consequatur aut perferendis doloribus.
+## Converting user input into numbers for the model
 
-## Why it costs what it costs
+*Coming soon…*
 
-Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-impedit quo minus id quod maxime placeat facere possimus, omnis voluptas
-assumenda est, omnis dolor repellendus.
+## Running the model
 
-```python
-# Filler. Replace with something real.
-for _ in range(max_new_tokens):
-    logits = model(tokens)[-1]
-    tokens.append(sample(logits))
-```
+*Coming soon…*
 
-Et harum quidem rerum facilis est et expedita distinctio. Sed ut
-perspiciatis unde omnis iste natus error sit voluptatem accusantium.
+## Generating the next token
 
-## What to take away
-
-Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
-nulla pariatur.
+*Coming soon…*
